@@ -490,10 +490,12 @@ TEST(primal_beziercurve, sector_weights)
 
   using CoordType = double;
 
+  primal::internal::MemoizedSectorAreaWeights<CoordType> memoizedSectorWeights;
+
   // order 1
   {
     const int ord = 1;
-    auto weights = primal::generateBezierCurveSectorWeights<CoordType>(ord);
+    auto weights = memoizedSectorWeights.getWeights(ord);
 
     double binomInv = 1. / axom::utilities::binomialCoefficient(2, 1);
     axom::numerics::Matrix<CoordType> exp(ord + 1, ord + 1);
@@ -514,7 +516,7 @@ TEST(primal_beziercurve, sector_weights)
   // order 2
   {
     const int ord = 2;
-    auto weights = primal::generateBezierCurveSectorWeights<CoordType>(ord);
+    auto weights = memoizedSectorWeights.getWeights(ord);
 
     double binomInv = 1. / axom::utilities::binomialCoefficient(4, 2);
     axom::numerics::Matrix<CoordType> exp(ord + 1, ord + 1);
@@ -536,7 +538,7 @@ TEST(primal_beziercurve, sector_weights)
   // order 3
   {
     const int ord = 3;
-    auto weights = primal::generateBezierCurveSectorWeights<CoordType>(ord);
+    auto weights = memoizedSectorWeights.getWeights(ord);
 
     double binomInv = 1. / axom::utilities::binomialCoefficient(6, 3);
     axom::numerics::Matrix<CoordType> exp(ord + 1, ord + 1);
@@ -559,7 +561,7 @@ TEST(primal_beziercurve, sector_weights)
   // order 4
   {
     const int ord = 4;
-    auto weights = primal::generateBezierCurveSectorWeights<CoordType>(ord);
+    auto weights = memoizedSectorWeights.getWeights(ord);
 
     double binomInv = 1. / axom::utilities::binomialCoefficient(8, 4);
     axom::numerics::Matrix<CoordType> exp(ord + 1, ord + 1);
@@ -583,7 +585,7 @@ TEST(primal_beziercurve, sector_weights)
   // order 5
   {
     const int ord = 5;
-    auto weights = primal::generateBezierCurveSectorWeights<CoordType>(ord);
+    auto weights = memoizedSectorWeights.getWeights(ord);
 
     double binomInv = 1. / axom::utilities::binomialCoefficient(10, 5);
     axom::numerics::Matrix<CoordType> exp(ord + 1, ord + 1);
