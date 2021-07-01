@@ -1,11 +1,12 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
 #ifndef AXOM_NUMERICS_EIGEN_SOLVE_HPP_
 #define AXOM_NUMERICS_EIGEN_SOLVE_HPP_
 
+#include "axom/config.hpp"
 #include "axom/core/numerics/matvecops.hpp"     // for matrix vector operators
 #include "axom/core/numerics/Determinants.hpp"  // for Determinants
 #include "axom/core/numerics/LU.hpp"            // for lu_decompose()/lu_solve()

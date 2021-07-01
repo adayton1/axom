@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -8,6 +8,7 @@
 
 #include "gtest/gtest.h"
 
+#include "axom/config.hpp"
 #include "axom/primal/geometry/NumericArray.hpp"
 #include "axom/primal/geometry/Point.hpp"
 #include "axom/primal/geometry/Vector.hpp"
@@ -418,7 +419,6 @@ TEST(primal_OBBox, obb_copy_and_assignment)
   QVector e(1.);    //extents
   QPoint pt2(0.5);  // (.5,.5,.5)
   QPoint pt3(2);    // (2,2,2)
-  QVector disp = QVector(2.);
 
   QOBBox obbox1(pt1, u, e);
   QOBBox obbox2 = obbox1;

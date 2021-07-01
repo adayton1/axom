@@ -117,7 +117,8 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 exclude_patterns = [ '_build',
-                     'cmake/blt/docs']
+                     'cmake/blt/docs',
+                     'thirdparty']
 
 # The reST default role (used for this markup: `text`) to use for all
 # documents.
@@ -135,7 +136,7 @@ exclude_patterns = [ '_build',
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = 'default'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []

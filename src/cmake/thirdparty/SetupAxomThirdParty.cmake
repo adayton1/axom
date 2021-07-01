@@ -1,5 +1,5 @@
 # Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-# other Axom Project Developers. See the top-level COPYRIGHT file for details.
+# other Axom Project Developers. See the top-level LICENSE file for details.
 #
 # SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -80,6 +80,7 @@ endif()
 #------------------------------------------------------------------------------
 if (HDF5_DIR)
     include(cmake/thirdparty/SetupHDF5.cmake)
+    blt_list_append(TO TPL_DEPS ELEMENTS hdf5)
 else()
     message(STATUS "HDF5 support is OFF")
 endif()
@@ -103,16 +104,25 @@ else()
     message(STATUS "Conduit support is OFF")
 endif()
 
-
 #------------------------------------------------------------------------------
 # MFEM
 #------------------------------------------------------------------------------
 if (MFEM_DIR)
     include(cmake/thirdparty/FindMFEM.cmake)
-    blt_register_library( NAME      mfem
-                          INCLUDES  ${MFEM_INCLUDE_DIRS}
-                          LIBRARIES ${MFEM_LIBRARIES}
-                          TREAT_INCLUDES_AS_SYSTEM ON)
+    # If the CMake build system was used, a CMake target for mfem already exists
+    if (NOT TARGET mfem)
+        # Mark mfem (and subsequent dependencies without a CMake config file) as
+        # EXPORTABLE so they can be exported into axom-targets, allowing for a
+        # "shrinkwrapped" CMake config
+        blt_import_library( NAME       mfem
+                            INCLUDES   ${MFEM_INCLUDE_DIRS}
+                            LIBRARIES  ${MFEM_LIBRARIES}
+                            TREAT_INCLUDES_AS_SYSTEM ON
+                            EXPORTABLE ON)
+        blt_list_append(TO TPL_DEPS ELEMENTS mfem)
+    else()
+        target_include_directories(mfem SYSTEM INTERFACE ${MFEM_INCLUDE_DIRS} )
+    endif()
 elseif(TARGET mfem)
     message(STATUS "Using MFEM from within the current project")
     set(MFEM_FOUND TRUE CACHE BOOL "" FORCE)
@@ -145,10 +155,12 @@ endif()
 #------------------------------------------------------------------------------
 if (SCR_DIR)
     include(cmake/thirdparty/FindSCR.cmake)
-    blt_register_library( NAME      scr
-                          INCLUDES  ${SCR_INCLUDE_DIRS}
-                          LIBRARIES ${SCR_LIBRARY}
-                          TREAT_INCLUDES_AS_SYSTEM ON)
+    blt_import_library( NAME       scr
+                        INCLUDES   ${SCR_INCLUDE_DIRS}
+                        LIBRARIES  ${SCR_LIBRARIES}
+                        TREAT_INCLUDES_AS_SYSTEM ON
+                        EXPORTABLE ON)
+    blt_list_append(TO TPL_DEPS ELEMENTS scr)
 else()
     message(STATUS "SCR support is OFF")
 endif()
@@ -185,14 +197,34 @@ endforeach()
 #------------------------------------------------------------------------------
 if (LUA_DIR)
     include(cmake/thirdparty/FindLUA.cmake)
-    blt_register_library(
+    blt_import_library(
         NAME          lua
         INCLUDES      ${LUA_INCLUDE_DIR}
         LIBRARIES     ${LUA_LIBRARY}
-        TREAT_INCLUDES_AS_SYSTEM ON)
+        TREAT_INCLUDES_AS_SYSTEM ON
+        EXPORTABLE    ON)
+    blt_list_append(TO TPL_DEPS ELEMENTS lua)
 else()
     message(STATUS "LUA support is OFF")
     set(LUA_FOUND OFF CACHE BOOL "")
+endif()
+
+
+#------------------------------------------------------------------------------
+# C2C
+#------------------------------------------------------------------------------
+if (C2C_DIR)
+    include(cmake/thirdparty/FindC2C.cmake)
+    blt_import_library(
+        NAME          c2c
+        INCLUDES      ${C2C_INCLUDE_DIR}
+        LIBRARIES     ${C2C_LIBRARY}
+        TREAT_INCLUDES_AS_SYSTEM ON
+        EXPORTABLE    ON)
+    blt_list_append(TO TPL_DEPS ELEMENTS c2c)
+else()
+    message(STATUS "c2c support is OFF")
+    set(C2C_FOUND OFF CACHE BOOL "")
 endif()
 
 #------------------------------------------------------------------------------

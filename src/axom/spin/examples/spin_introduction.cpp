@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -25,6 +25,8 @@
  *
  * each prepended with an underscore.
  */
+
+#include "axom/config.hpp"
 
 // Axom primitives
 #include "axom/primal/geometry/BoundingBox.hpp"
@@ -704,13 +706,15 @@ void driveOctree()
     leafBlock = octree.findLeafBlock(queryPt);
   }
   // _octree_end
+
+  AXOM_UNUSED_VAR(leafBB);
 }
 
 int main(int argc, char** argv)
 {
   // Deal with unused variables
-  AXOM_DEBUG_VAR(argc);
-  AXOM_DEBUG_VAR(argv);
+  AXOM_UNUSED_VAR(argc);
+  AXOM_UNUSED_VAR(argv);
 
   demoRectangularLattice();
   demoMorton();

@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -22,7 +22,6 @@
  * a dataset to allow easier debugging.  In the future, we intend to separate
  * the conversion and truncation/display functionality into separate utilities.
  */
-#include "mpi.h"
 
 #include "axom/config.hpp"
 #include "fmt/fmt.hpp"
@@ -30,6 +29,7 @@
 #include "axom/sidre.hpp"
 #include "axom/slam.hpp"
 
+#include "mpi.h"
 #include "CLI11/CLI11.hpp"
 
 #include <limits>   // for numeric_limits<int>

@@ -1,10 +1,10 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
-#ifndef MESH_TESTER_HPP_
-#define MESH_TESTER_HPP_
+#ifndef AXOM_QUEST_MESH_TESTER_HPP_
+#define AXOM_QUEST_MESH_TESTER_HPP_
 
 // Axom includes
 #include "axom/config.hpp"
@@ -429,4 +429,4 @@ void weldTriMeshVertices(mint::UnstructuredMesh<mint::SINGLE_SHAPE>** surface_me
 }  // end namespace quest
 }  // end namespace axom
 
-#endif  // MESH_TESTER_HPP_
+#endif  // AXOM_QUEST_MESH_TESTER_HPP_

@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -16,11 +16,6 @@
  * \author K. Weiss (modified to use axom's Slam component)
  */
 
-#include <fstream>
-#include <sstream>
-#include <cmath>
-#include <cstdlib>
-
 #include "axom/config.hpp"
 #include "axom/core/utilities/FileUtilities.hpp"
 #include "axom/core/utilities/Utilities.hpp"
@@ -28,6 +23,11 @@
 #include "axom/slam.hpp"
 
 #include "fmt/fmt.hpp"
+
+#include <fstream>
+#include <sstream>
+#include <cmath>
+#include <cstdlib>
 
 namespace slam = axom::slam;
 

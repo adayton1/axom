@@ -1,5 +1,5 @@
 # Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-# other Axom Project Developers. See the top-level COPYRIGHT file for details.
+# other Axom Project Developers. See the top-level LICENSE file for details.
 #
 # SPDX-License-Identifier: (BSD-3-Clause)
 #------------------------------------------------------------------------------
@@ -23,6 +23,7 @@ set( primal_tests
     primal_point.cpp
     primal_ray_intersect.cpp
     primal_bounding_box_intersect.cpp
+    primal_segment.cpp
     primal_sphere.cpp
     primal_squared_distance.cpp
     primal_tetrahedron.cpp
@@ -30,7 +31,7 @@ set( primal_tests
     primal_vector.cpp
    )
 
-set(primal_test_depends fmt primal slic gtest)
+set(primal_test_depends axom fmt gtest)
 
 blt_list_append( TO primal_test_depends ELEMENTS cuda IF ${ENABLE_CUDA} )
 

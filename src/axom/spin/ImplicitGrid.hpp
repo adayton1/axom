@@ -1,10 +1,10 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
-#ifndef SPIN_IMPLICIT_GRID__HPP_
-#define SPIN_IMPLICIT_GRID__HPP_
+#ifndef AXOM_SPIN_IMPLICIT_GRID__HPP_
+#define AXOM_SPIN_IMPLICIT_GRID__HPP_
 
 #include "axom/config.hpp"
 #include "axom/core.hpp"  // for clamp functions
@@ -433,4 +433,4 @@ private:
 }  // end namespace spin
 }  // end namespace axom
 
-#endif  // SPIN_IMPLICIT_GRID__HPP_
+#endif  // AXOM_SPIN_IMPLICIT_GRID__HPP_

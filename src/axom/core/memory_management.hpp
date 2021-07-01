@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -8,6 +8,7 @@
 
 // Axom includes
 #include "axom/config.hpp"  // for AXOM compile-time definitions
+#include "axom/core/Macros.hpp"
 
 // Umpire includes
 #ifdef AXOM_USE_UMPIRE
@@ -56,7 +57,7 @@ inline void setDefaultAllocator(int allocatorID)
   umpire::Allocator allocator = rm.getAllocator(allocatorID);
   rm.setDefaultAllocator(allocator);
 #else
-  static_cast<void>(allocatorID);  // silence compiler warnings
+  AXOM_UNUSED_VAR(allocatorID);
 #endif
 }
 
@@ -150,7 +151,7 @@ inline T* allocate(std::size_t n, int allocID) noexcept
   return static_cast<T*>(allocator.allocate(numbytes));
 
 #else
-  static_cast<void>(allocID);  // silence compiler warnings
+  AXOM_UNUSED_VAR(allocID);
   return static_cast<T*>(std::malloc(numbytes));
 #endif
 }

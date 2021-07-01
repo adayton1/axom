@@ -1,10 +1,10 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
-#ifndef QUEST_POINT_IN_CELL_HPP_
-#define QUEST_POINT_IN_CELL_HPP_
+#ifndef AXOM_QUEST_POINT_IN_CELL_HPP_
+#define AXOM_QUEST_POINT_IN_CELL_HPP_
 
 #include "axom/config.hpp"
 #include "axom/core/Macros.hpp"
@@ -273,4 +273,4 @@ private:
 }  // end namespace quest
 }  // end namespace axom
 
-#endif  // QUEST_POINT_IN_CELL_HPP_
+#endif  // AXOM_QUEST_POINT_IN_CELL_HPP_

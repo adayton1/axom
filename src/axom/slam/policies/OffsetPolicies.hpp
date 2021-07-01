@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -75,7 +75,7 @@ struct CompileTimeOffset
 
   CompileTimeOffset(IntType val = DEFAULT_VALUE)
   {
-    AXOM_DEBUG_VAR(val);
+    AXOM_UNUSED_VAR(val);
     SLIC_ASSERT_MSG(
       val == INT_VAL,
       "slam::CompileTimeOffset -- tried to initialize a compile time "
@@ -100,7 +100,7 @@ struct ZeroOffset
 
   ZeroOffset(IntType val = DEFAULT_VALUE)
   {
-    AXOM_DEBUG_VAR(val);
+    AXOM_UNUSED_VAR(val);
     SLIC_ASSERT_MSG(
       val == DEFAULT_VALUE,
       "slam::ZeroOffset policy -- tried to initialize a NoOffset policy"

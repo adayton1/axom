@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -14,6 +14,7 @@
 #ifndef AXOM_NUMERICS_MATVECOPS_HPP_
 #define AXOM_NUMERICS_MATVECOPS_HPP_
 
+#include "axom/config.hpp"
 #include "axom/core/numerics/Determinants.hpp"  // numerics::determinant()
 #include "axom/core/numerics/Matrix.hpp"        // for numerics::Matrix
 #include "axom/core/utilities/Utilities.hpp"    // for isNearlyEqual()

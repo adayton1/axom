@@ -1,10 +1,10 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
-#ifndef DENSE_OCTREE_LEVEL__HXX_
-#define DENSE_OCTREE_LEVEL__HXX_
+#ifndef AXOM_SPIN_DENSE_OCTREE_LEVEL__HPP_
+#define AXOM_SPIN_DENSE_OCTREE_LEVEL__HPP_
 
 #include "axom/config.hpp"
 #include "axom/core/Types.hpp"
@@ -320,4 +320,4 @@ private:
 }  // end namespace spin
 }  // end namespace axom
 
-#endif  // DENSE_OCTREE_LEVEL__HXX_
+#endif  // AXOM_SPIN_DENSE_OCTREE_LEVEL__HPP_

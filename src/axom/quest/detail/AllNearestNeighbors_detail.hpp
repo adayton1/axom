@@ -1,10 +1,10 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
-#ifndef ALL_NEAREST_NEIGHBORS_DETAIL_HPP_
-#define ALL_NEAREST_NEIGHBORS_DETAIL_HPP_
+#ifndef AXOM_QUEST_ALL_NEAREST_NEIGHBORS_DETAIL_HPP_
+#define AXOM_QUEST_ALL_NEAREST_NEIGHBORS_DETAIL_HPP_
 
 namespace axom
 {
@@ -31,4 +31,4 @@ inline double squared_distance(double x1,
 }  // end namespace quest
 }  // end namespace axom
 
-#endif  // ALL_NEAREST_NEIGHBORS_DETAIL_HPP_
+#endif  // AXOM_QUEST_ALL_NEAREST_NEIGHBORS_DETAIL_HPP_

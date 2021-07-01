@@ -1,10 +1,10 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
 /**
- * \file
+ * \file OctreeLevel.hpp
  * \brief Defines templated OctreeLevel class
  *
  * An OctreeLevel associates data with the integer points on a sparse grid.
@@ -16,8 +16,8 @@
  * hash key for its octree blocks.
  */
 
-#ifndef OCTREE_LEVEL__HXX_
-#define OCTREE_LEVEL__HXX_
+#ifndef AXOM_SPIN_OCTREE_LEVEL__HPP_
+#define AXOM_SPIN_OCTREE_LEVEL__HPP_
 
 #include "axom/config.hpp"
 #include "axom/core.hpp"
@@ -362,4 +362,4 @@ protected:
 }  // end namespace spin
 }  // end namespace axom
 
-#endif  // OCTREE_LEVEL__HXX_
+#endif  // AXOM_SPIN_OCTREE_LEVEL__HPP_

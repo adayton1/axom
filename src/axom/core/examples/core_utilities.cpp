@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -123,7 +123,7 @@ int main(int argc, char** argv)
 
   if(argc == 1)
   {
-    std::cerr << "Error: not path given on command line" << std::endl;
+    std::cerr << "Error: no path given on command line" << std::endl;
     return 1;
   }
   else

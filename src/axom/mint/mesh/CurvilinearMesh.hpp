@@ -1,11 +1,12 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
 #ifndef MINT_CURVILINEARMESH_HPP_
 #define MINT_CURVILINEARMESH_HPP_
 
+#include "axom/config.hpp"
 #include "axom/mint/mesh/StructuredMesh.hpp"  // base class
 #include "axom/mint/config.hpp"               // for compile-time definitions
 
@@ -196,7 +197,7 @@ public:
                   IndexType Nj = -1,
                   IndexType Nk = -1);
 
-  CurvilinearMesh(sidre::Group* group,
+  AXOM_EXPORT CurvilinearMesh(sidre::Group* group,
                   IndexType Ni,
                   IndexType Nj = -1,
                   IndexType Nk = -1)

@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -91,6 +91,10 @@ void about(std::ostream &oss)
   oss << "Active Dependencies: " << std::endl;
 
   std::vector<std::string> libs;
+
+#ifdef AXOM_USE_C2C
+  libs.push_back("c2c");
+#endif
 
 #ifdef AXOM_USE_CLI11
   libs.push_back("CLI11");

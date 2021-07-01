@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -22,23 +22,19 @@ using axom::inlet::FunctionType;
 using axom::inlet::Inlet;
 using axom::inlet::InletType;
 using axom::inlet::LuaReader;
-using axom::sidre::DataStore;
+using axom::inlet::VerificationError;
 
-Inlet createBasicInlet(DataStore* ds,
-                       const std::string& luaString,
-                       bool enableDocs = true)
+Inlet createBasicInlet(const std::string& luaString, bool enableDocs = true)
 {
   auto lr = std::make_unique<LuaReader>();
   lr->parseString(luaString);
-
-  return Inlet(std::move(lr), ds->getRoot(), enableDocs);
+  return Inlet(std::move(lr), enableDocs);
 }
 
 TEST(inlet_function, simple_vec3_to_double_raw)
 {
   std::string testString = "function foo (v) return v.x + v.y + v.z end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   auto func =
     inlet.reader().getFunction("foo", FunctionTag::Double, {FunctionTag::Vector});
@@ -51,8 +47,7 @@ TEST(inlet_function, simple_vec3_to_double_raw)
 TEST(inlet_function, simple_vec3_to_vec3_raw)
 {
   std::string testString = "function foo (v) return 2*v end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   auto func =
     inlet.reader().getFunction("foo", FunctionTag::Vector, {FunctionTag::Vector});
@@ -67,8 +62,7 @@ TEST(inlet_function, simple_vec3_to_vec3_raw)
 TEST(inlet_function, simple_vec3_to_vec3_raw_partial_init)
 {
   std::string testString = "function foo (v) return 2*v end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   auto func =
     inlet.reader().getFunction("foo", FunctionTag::Vector, {FunctionTag::Vector});
@@ -89,8 +83,7 @@ TEST(inlet_function, simple_vec3_to_vec3_raw_partial_init)
 TEST(inlet_function, simple_vec3_to_double_through_container)
 {
   std::string testString = "function foo (v) return v.x + v.y + v.z end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Double,
@@ -105,8 +98,7 @@ TEST(inlet_function, simple_vec3_to_double_through_container)
 TEST(inlet_function, simple_vec3_to_vec3_through_container)
 {
   std::string testString = "function foo (v) return 2*v end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Vector,
@@ -124,8 +116,7 @@ TEST(inlet_function, simple_vec3_to_vec3_through_container)
 TEST(inlet_function, simple_double_to_double_through_container)
 {
   std::string testString = "function foo (a) return (a * 3.4) + 9.64 end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Double,
@@ -142,8 +133,7 @@ TEST(inlet_function, simple_double_to_double_through_container)
 TEST(inlet_function, simple_void_to_double_through_container)
 {
   std::string testString = "function foo () return 9.64 end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo", FunctionTag::Double, {}, "foo's description");
 
@@ -156,8 +146,7 @@ TEST(inlet_function, simple_double_to_void_through_container)
 {
   // Test a function that returns nothing by using it to modify a global
   std::string testString = "bar = 19.9; function foo (a) bar = a end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Void,
@@ -182,8 +171,7 @@ TEST(inlet_function, simple_string_to_double_through_container)
     "  elseif s == 'b' then return -6.3 "
     "  else return 66.5 end "
     "end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Double,
@@ -206,8 +194,7 @@ TEST(inlet_function, simple_double_to_string_through_container)
     "  elseif d == 2 then return 'b' "
     "  else return 'c' end "
     "end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::String,
@@ -224,8 +211,7 @@ TEST(inlet_function, simple_double_to_string_through_container)
 TEST(inlet_function, simple_vec3_to_double_through_container_call)
 {
   std::string testString = "function foo (v) return v.x + v.y + v.z end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Double,
@@ -239,8 +225,7 @@ TEST(inlet_function, simple_vec3_to_double_through_container_call)
 TEST(inlet_function, simple_vec3_to_vec3_through_container_call)
 {
   std::string testString = "function foo (v) return 2*v end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Vector,
@@ -258,8 +243,7 @@ TEST(inlet_function, simple_vec3_double_to_double_through_container_call)
 {
   std::string testString =
     "function foo (v, t) return t * (v.x + v.y + v.z) end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Double,
@@ -273,8 +257,7 @@ TEST(inlet_function, simple_vec3_double_to_double_through_container_call)
 TEST(inlet_function, simple_vec3_double_to_vec3_through_container_call)
 {
   std::string testString = "function foo (v, t) return t*v end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Vector,
@@ -291,8 +274,7 @@ TEST(inlet_function, simple_vec3_double_to_vec3_through_container_call)
 TEST(inlet_function, simple_vec3_to_vec3_verify_lambda_pass)
 {
   std::string testString = "function foo (v) return 2*v end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   auto& func = inlet
                  .addFunction("foo",
@@ -311,8 +293,7 @@ TEST(inlet_function, simple_vec3_to_vec3_verify_lambda_pass)
 TEST(inlet_function, simple_vec3_to_vec3_verify_lambda_fail)
 {
   std::string testString = "function foo (v) return 2*v end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   auto& func = inlet
                  .addFunction("foo",
@@ -326,6 +307,31 @@ TEST(inlet_function, simple_vec3_to_vec3_verify_lambda_fail)
   });
 
   EXPECT_FALSE(inlet.verify());
+}
+
+TEST(inlet_function, simple_vec3_to_vec3_verify_lambda_with_errors_fail)
+{
+  std::string testString = "function foo (v) return 2*v end";
+  auto inlet = createBasicInlet(testString);
+
+  auto& func = inlet
+                 .addFunction("foo",
+                              FunctionTag::Vector,
+                              {FunctionTag::Vector},
+                              "foo's description")
+                 .required();
+  func.registerVerifier([](const axom::inlet::Function& func,
+                           std::vector<VerificationError>* errors) {
+    INLET_VERIFICATION_WARNING("foo", "Something bad happened", errors);
+    auto result = func.call<FunctionType::Vector>(FunctionType::Vector {2, 0, 0});
+    return std::abs(result[0] - 2) < 1e-5;
+  });
+
+  std::vector<VerificationError> errors;
+  EXPECT_FALSE(inlet.verify(&errors));
+  ASSERT_FALSE(errors.empty());
+  ASSERT_EQ(axom::Path("foo"), errors[0].path);
+  ASSERT_EQ("Something bad happened", errors[0].message);
 }
 
 struct Foo
@@ -348,8 +354,7 @@ TEST(inlet_function, simple_vec3_to_vec3_struct)
 {
   std::string testString =
     "foo = { bar = true; baz = function (v) return 2*v end }";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   // Define schema
   inlet.addBool("foo/bar", "bar's description");
@@ -375,8 +380,7 @@ TEST(inlet_function, simple_vec3_to_vec3_array_of_struct)
     "       [12] = { bar = false, "
     "                baz = function (v) return 3*v end } "
     "}";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   auto& arr_container = inlet.addStructArray("foo");
 
@@ -415,8 +419,7 @@ TEST(inlet_function, dimension_dependent_result)
     "return Vector.new(first, 0, last) "
     "end "
     "end";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   inlet.addFunction("foo",
                     FunctionTag::Vector,
@@ -461,8 +464,7 @@ TEST(inlet_function, nested_function_in_struct)
   std::string testString =
     "quux = { [0] = { foo = { bar = function (x) return x + 1 end } }, "
     "         [1] = { foo = { bar = function (x) return x + 3 end } } }";
-  DataStore ds;
-  auto inlet = createBasicInlet(&ds, testString);
+  auto inlet = createBasicInlet(testString);
 
   auto& quux_schema = inlet.addStructArray("quux");
   auto& foo_schema = quux_schema.addStruct("foo");

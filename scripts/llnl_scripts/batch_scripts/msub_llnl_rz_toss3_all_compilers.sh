@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-# other Axom Project Developers. See the top-level COPYRIGHT file for details.
+# other Axom Project Developers. See the top-level LICENSE file for details.
 #
 # SPDX-License-Identifier: (BSD-3-Clause)
 
 #MSUB -l nodes=1:ppn=36
 #MSUB -q pdebug
-#MSUB -l walltime=8:00:00
+#MSUB -l walltime=4:00:00
 #MSUB -j oe
 #MSUB -o m.out.rz.uberenv.toss3.all.compilers.%j.%N.txt
 #

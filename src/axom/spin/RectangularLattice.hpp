@@ -1,11 +1,12 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
-#ifndef SPIN_RECTANGULAR_LATTICE_HPP_
-#define SPIN_RECTANGULAR_LATTICE_HPP_
+#ifndef AXOM_SPIN_RECTANGULAR_LATTICE_HPP_
+#define AXOM_SPIN_RECTANGULAR_LATTICE_HPP_
 
+#include "axom/config.hpp"
 #include "axom/core/utilities/Utilities.hpp"
 
 #include "axom/primal/geometry/BoundingBox.hpp"
@@ -293,4 +294,4 @@ std::ostream& operator<<(
 }  // end namespace spin
 }  // end namespace axom
 
-#endif  // SPIN_RECTANGULAR_LATTICE_HPP_
+#endif  // AXOM_SPIN_RECTANGULAR_LATTICE_HPP_

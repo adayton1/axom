@@ -1,5 +1,5 @@
 .. ## Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-.. ## other Axom Project Developers. See the top-level COPYRIGHT file for details.
+.. ## other Axom Project Developers. See the top-level LICENSE file for details.
 .. ##
 .. ## SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -75,21 +75,21 @@ of the Group "root" in parallel.
 
 First include needed headers.
 
-.. literalinclude:: ../../tests/spio/spio_parallel.cpp
+.. literalinclude:: ../../tests/spio/spio_parallel.hpp
    :start-after: _parallel_io_headers_start
    :end-before: _parallel_io_headers_end
    :language: C++
 
 Then use IOManager to save in parallel.
 
-.. literalinclude:: ../../tests/spio/spio_parallel.cpp
+.. literalinclude:: ../../tests/spio/spio_parallel.hpp
    :start-after: _parallel_io_save_start
    :end-before: _parallel_io_save_end
    :language: C++
 
 Loading data in parallel is easy:
 
-.. literalinclude:: ../../tests/spio/spio_parallel.cpp
+.. literalinclude:: ../../tests/spio/spio_parallel.hpp
    :start-after: _parallel_io_load_start
    :end-before: _parallel_io_load_end
    :language: C++

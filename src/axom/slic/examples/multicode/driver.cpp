@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -10,6 +10,7 @@
 
 #include "physicsA.hpp"
 #include "physicsB.hpp"
+#include "axom/config.hpp"
 #include "axom/slic/interface/slic.hpp"
 #include "axom/slic/streams/GenericOutputStream.hpp"
 
@@ -67,9 +68,8 @@ void driver_finalize()
 //-----------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
-  /* silence compiler warnings */
-  static_cast<void>(argc);
-  static_cast<void>(argv);
+  AXOM_UNUSED_VAR(argc);
+  AXOM_UNUSED_VAR(argv);
 
   driver_init();
   physicsA::init();

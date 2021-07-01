@@ -1,5 +1,5 @@
 # Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-# other Axom Project Developers. See the top-level COPYRIGHT file for details.
+# other Axom Project Developers. See the top-level LICENSE file for details.
 #
 # SPDX-License-Identifier: (BSD-3-Clause)
 #------------------------------------------------------------------------------
@@ -25,6 +25,11 @@ set( quest_headers
 
     ## In/out query
     InOutOctree.hpp
+    detail/inout/BlockData.hpp
+    detail/inout/MeshWrapper.hpp
+    detail/inout/InOutOctreeMeshDumper.hpp
+    detail/inout/InOutOctreeStats.hpp
+    detail/inout/InOutOctreeValidator.hpp
 
     # Mesh tester headers
     MeshTester.hpp
@@ -33,7 +38,7 @@ set( quest_headers
     PointInCell.hpp
     detail/PointFinder.hpp
     detail/PointInCellMeshWrapper_mfem.hpp
-    
+
     ## STL library headers
     stl/STLReader.hpp
 
@@ -43,7 +48,7 @@ set( quest_headers
 
     interface/inout.hpp
     interface/signed_distance.hpp
-    
+
     )
 
 set( quest_sources
@@ -62,7 +67,7 @@ set( quest_sources
 
     ## quest interface sources
     interface/internal/QuestHelpers.cpp
-    
+
     interface/inout.cpp
     interface/signed_distance.cpp
 
@@ -75,6 +80,7 @@ set( quest_depends_on
      slam
      spin
      primal
+     fmt
      )
 
 blt_list_append(TO quest_depends_on IF SPARSEHASH_FOUND ELEMENTS sparsehash)

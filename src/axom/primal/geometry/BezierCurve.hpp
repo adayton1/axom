@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -9,8 +9,8 @@
  * \brief A BezierCurve primitive
  */
 
-#ifndef PRIMAL_BEZIERCURVE_HPP_
-#define PRIMAL_BEZIERCURVE_HPP_
+#ifndef AXOM_PRIMAL_BEZIERCURVE_HPP_
+#define AXOM_PRIMAL_BEZIERCURVE_HPP_
 
 #include "axom/core/utilities/Utilities.hpp"
 #include "axom/slic.hpp"
@@ -343,4 +343,4 @@ std::ostream& operator<<(std::ostream& os, const BezierCurve<T, NDIMS>& bCurve)
 }  // namespace primal
 }  // namespace axom
 
-#endif  // PRIMAL_BEZIERCURVE_HPP_
+#endif  // AXOM_PRIMAL_BEZIERCURVE_HPP_

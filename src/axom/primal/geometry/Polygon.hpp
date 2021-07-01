@@ -1,5 +1,5 @@
 // Copyright (c) 2017-2021, Lawrence Livermore National Security, LLC and
-// other Axom Project Developers. See the top-level COPYRIGHT file for details.
+// other Axom Project Developers. See the top-level LICENSE file for details.
 //
 // SPDX-License-Identifier: (BSD-3-Clause)
 
@@ -9,8 +9,8 @@
  * \brief A Polygon primitive for primal
  */
 
-#ifndef PRIMAL_POLYGON_HPP_
-#define PRIMAL_POLYGON_HPP_
+#ifndef AXOM_PRIMAL_POLYGON_HPP_
+#define AXOM_PRIMAL_POLYGON_HPP_
 
 #include "axom/primal/geometry/Point.hpp"
 #include "axom/primal/geometry/Vector.hpp"
@@ -155,4 +155,4 @@ std::ostream& operator<<(std::ostream& os, const Polygon<T, NDIMS>& poly)
 }  // namespace primal
 }  // namespace axom
 
-#endif  // PRIMAL_POLYGON_HPP_
+#endif  // AXOM_PRIMAL_POLYGON_HPP_
