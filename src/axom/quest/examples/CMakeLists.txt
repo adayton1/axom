@@ -167,7 +167,7 @@ if(MFEM_FOUND)
         NAME       quest_high_order_remap_ex
         SOURCES    quest_high_order_remap.cpp
         OUTPUT_DIR ${EXAMPLE_OUTPUT_DIRECTORY}
-        DEPENDS_ON ${quest_example_depends} mfem fmt cli11
+        DEPENDS_ON ${quest_example_depends} mfem
         FOLDER      axom/quest/examples
     )    
 

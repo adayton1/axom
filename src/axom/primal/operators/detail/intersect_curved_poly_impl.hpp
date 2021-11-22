@@ -27,7 +27,7 @@
 #include "axom/primal/operators/squared_distance.hpp"
 #include "axom/primal/operators/detail/intersect_bezier_impl.hpp"
 
-#include "fmt/fmt.hpp"
+#include "axom/fmt.hpp"
 
 namespace axom
 {
@@ -214,7 +214,7 @@ public:
 
             if(m_verbose)
             {
-              SLIC_INFO(fmt::format(
+              SLIC_INFO(axom::fmt::format(
                 "Found intersection {} -- on edge {} of polygon1 at t={}"
                 " and edge {} of polygon2 at t={}; intersection point {}",
                 numinters + 1,

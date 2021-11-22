@@ -15,7 +15,7 @@
 #include "axom/primal/geometry/CurvedPolygon.hpp"
 #include "axom/primal/operators/intersect.hpp"
 
-#include "fmt/fmt.hpp"
+#include "axom/fmt.hpp"
 
 #include <numeric>
 #include <fstream>
@@ -39,7 +39,7 @@ void outputAsSVG(
   }
   bbox.scale(1.1);
 
-  std::string header = fmt::format(
+  std::string header = axom::fmt::format(
     "<svg viewBox='{} {} {} {}' xmlns='http://www.w3.org/2000/svg'>",
     bbox.getMin()[0],
     bbox.getMin()[1],
@@ -49,7 +49,7 @@ void outputAsSVG(
 
   // lambda to convert a CurvedPolygon to an SVG path string
   auto cpToSVG = [](const primal::CurvedPolygon<CoordType, DIM>& cp) {
-    fmt::memory_buffer out;
+    axom::fmt::memory_buffer out;
     bool is_first = true;
 
     for(auto& curve : cp.getEdges())
@@ -57,39 +57,40 @@ void outputAsSVG(
       // Only write out first point for first edge
       if(is_first)
       {
-        fmt::format_to(out, "M {} {} ", curve[0][0], curve[0][1]);
+        axom::fmt::format_to(out, "M {} {} ", curve[0][0], curve[0][1]);
         is_first = false;
       }
 
       switch(curve.getOrder())
       {
       case 1:
-        fmt::format_to(out, "L {} {} ", curve[1][0], curve[1][1]);
+        axom::fmt::format_to(out, "L {} {} ", curve[1][0], curve[1][1]);
         break;
       case 2:
-        fmt::format_to(out,
-                       "Q {} {}, {} {} ",
-                       curve[1][0],
-                       curve[1][1],
-                       curve[2][0],
-                       curve[2][1]);
+        axom::fmt::format_to(out,
+                             "Q {} {}, {} {} ",
+                             curve[1][0],
+                             curve[1][1],
+                             curve[2][0],
+                             curve[2][1]);
         break;
       case 3:
-        fmt::format_to(out,
-                       "C {} {}, {} {}, {} {} ",
-                       curve[1][0],
-                       curve[1][1],
-                       curve[2][0],
-                       curve[2][1],
-                       curve[3][0],
-                       curve[3][1]);
+        axom::fmt::format_to(out,
+                             "C {} {}, {} {}, {} {} ",
+                             curve[1][0],
+                             curve[1][1],
+                             curve[2][0],
+                             curve[2][1],
+                             curve[3][0],
+                             curve[3][1]);
         break;
       default:
         SLIC_WARNING(
           "Unsupported case: can only output up to cubic curves as SVG.");
       }
     }
-    return fmt::format("    <path d='{} Z' />\n", fmt::to_string(out));
+    return axom::fmt::format("    <path d='{} Z' />\n",
+                             axom::fmt::to_string(out));
   };
 
   std::string poly1Group;
@@ -98,39 +99,41 @@ void outputAsSVG(
 
   // render polygon1 as SVG
   {
-    fmt::memory_buffer out;
-    fmt::format_to(out,
-                   "  <g id='source_mesh' stroke='black' stroke-width='.01' "
-                   "fill='red' fill-opacity='.7'>\n");
-    fmt::format_to(out, cpToSVG(polygon1));
-    fmt::format_to(out, "  </g>\n");
-    poly1Group = fmt::to_string(out);
+    axom::fmt::memory_buffer out;
+    axom::fmt::format_to(
+      out,
+      "  <g id='source_mesh' stroke='black' stroke-width='.01' "
+      "fill='red' fill-opacity='.7'>\n");
+    axom::fmt::format_to(out, cpToSVG(polygon1));
+    axom::fmt::format_to(out, "  </g>\n");
+    poly1Group = axom::fmt::to_string(out);
   }
 
   // render polygon2 as SVG
   {
-    fmt::memory_buffer out;
-    fmt::format_to(out,
-                   "  <g id='source_mesh' stroke='black' stroke-width='.01' "
-                   "fill='blue' fill-opacity='.7'>\n");
-    fmt::format_to(out, cpToSVG(polygon2));
-    fmt::format_to(out, "  </g>\n");
-    poly2Group = fmt::to_string(out);
+    axom::fmt::memory_buffer out;
+    axom::fmt::format_to(
+      out,
+      "  <g id='source_mesh' stroke='black' stroke-width='.01' "
+      "fill='blue' fill-opacity='.7'>\n");
+    axom::fmt::format_to(out, cpToSVG(polygon2));
+    axom::fmt::format_to(out, "  </g>\n");
+    poly2Group = axom::fmt::to_string(out);
   }
 
   //render intersection polygons as SVG
   {
-    fmt::memory_buffer out;
-    fmt::format_to(
+    axom::fmt::memory_buffer out;
+    axom::fmt::format_to(
       out,
       "  <g id='intersection_mesh' stroke='black' stroke-width='.01' "
       "fill='green' fill-opacity='.7'>\n");
     for(auto& cp : intersectionPolygons)
     {
-      fmt::format_to(out, cpToSVG(cp));
+      axom::fmt::format_to(out, cpToSVG(cp));
     }
-    fmt::format_to(out, "  </g>\n");
-    intersectionGroup = fmt::to_string(out);
+    axom::fmt::format_to(out, "  </g>\n");
+    intersectionGroup = axom::fmt::to_string(out);
   }
 
   // Write the file

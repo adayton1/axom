@@ -9,6 +9,7 @@
  */
 
 // Axom includes
+#include "axom/config.hpp"
 #include "axom/core.hpp"
 #include "axom/slic.hpp"
 #include "axom/primal.hpp"
@@ -20,8 +21,8 @@
   #error "This example requires mfem"
 #endif
 
-#include "fmt/fmt.hpp"
-#include "CLI11/CLI11.hpp"
+#include "axom/fmt.hpp"
+#include "axom/CLI11.hpp"
 
 #include <fstream>
 
@@ -243,7 +244,7 @@ public:
   using CandidateList = std::vector<int>;
 
 private:
-  using GridType = spin::ImplicitGrid<DIM, int>;
+  using GridType = spin::ImplicitGrid<DIM, axom::SEQ_EXEC, int>;
 
 public:
   Remapper() = default;
@@ -369,7 +370,7 @@ public:
     // dump original mesh
     {
       std::ofstream file;
-      file.open(fmt::format("{}_mesh_orig.mfem", isSource ? "src" : "tgt"));
+      file.open(axom::fmt::format("{}_mesh_orig.mfem", isSource ? "src" : "tgt"));
       mesh->Print(file);
     }
 
@@ -388,7 +389,7 @@ public:
     // dump modified mesh
     {
       std::ofstream file;
-      file.open(fmt::format("{}_mesh_set.mfem", isSource ? "src" : "tgt"));
+      file.open(axom::fmt::format("{}_mesh_set.mfem", isSource ? "src" : "tgt"));
       mesh->Print(file);
     }
 
@@ -402,7 +403,7 @@ public:
       tgtMesh.setMesh(mesh);
     }
 
-    SLIC_INFO(fmt::format(
+    SLIC_INFO(axom::fmt::format(
       "Loaded {} mesh from {} w/ {} elements."
       "\n\t(Slightly inflated) mesh bounding box: {}",
       isSource ? "source" : "target",
@@ -532,7 +533,7 @@ public:
 
     // lambda to convert a CurvedPolygon to an SVG path string
     auto cpToSVG = [](const MeshWrapper::CurvedPolygonType& cp) {
-      fmt::memory_buffer out;
+      axom::fmt::memory_buffer out;
       bool is_first = true;
 
       for(auto& curve : cp.getEdges())
@@ -540,39 +541,40 @@ public:
         // Only write out first point for first edge
         if(is_first)
         {
-          fmt::format_to(out, "M {} {} ", curve[0][0], curve[0][1]);
+          axom::fmt::format_to(out, "M {} {} ", curve[0][0], curve[0][1]);
           is_first = false;
         }
 
         switch(curve.getOrder())
         {
         case 1:
-          fmt::format_to(out, "L {} {} ", curve[1][0], curve[1][1]);
+          axom::fmt::format_to(out, "L {} {} ", curve[1][0], curve[1][1]);
           break;
         case 2:
-          fmt::format_to(out,
-                         "Q {} {}, {} {} ",
-                         curve[1][0],
-                         curve[1][1],
-                         curve[2][0],
-                         curve[2][1]);
+          axom::fmt::format_to(out,
+                               "Q {} {}, {} {} ",
+                               curve[1][0],
+                               curve[1][1],
+                               curve[2][0],
+                               curve[2][1]);
           break;
         case 3:
-          fmt::format_to(out,
-                         "C {} {}, {} {}, {} {} ",
-                         curve[1][0],
-                         curve[1][1],
-                         curve[2][0],
-                         curve[2][1],
-                         curve[3][0],
-                         curve[3][1]);
+          axom::fmt::format_to(out,
+                               "C {} {}, {} {}, {} {} ",
+                               curve[1][0],
+                               curve[1][1],
+                               curve[2][0],
+                               curve[2][1],
+                               curve[3][0],
+                               curve[3][1]);
           break;
         default:
           SLIC_WARNING(
             "Unsupported case: can only output up to cubic curves as SVG.");
         }
       }
-      return fmt::format("    <path d='{} Z' />\n", fmt::to_string(out));
+      return axom::fmt::format("    <path d='{} Z' />\n",
+                               axom::fmt::to_string(out));
     };
 
     std::string srcGroup;
@@ -581,41 +583,43 @@ public:
 
     // output src mesh
     {
-      fmt::memory_buffer out;
-      fmt::format_to(out,
-                     "  <g id='source_mesh' stroke='black' stroke-width='.01' "
-                     "fill='red' fill-opacity='.7'>\n");
+      axom::fmt::memory_buffer out;
+      axom::fmt::format_to(
+        out,
+        "  <g id='source_mesh' stroke='black' stroke-width='.01' "
+        "fill='red' fill-opacity='.7'>\n");
       auto& meshWrapper = srcMesh;
       for(int i = 0; i < meshWrapper.numElements(); ++i)
       {
         auto cp = meshWrapper.elemAsCurvedPolygon(i);
-        fmt::format_to(out, cpToSVG(cp));
+        axom::fmt::format_to(out, cpToSVG(cp));
       }
-      fmt::format_to(out, "  </g>\n");
-      srcGroup = fmt::to_string(out);
+      axom::fmt::format_to(out, "  </g>\n");
+      srcGroup = axom::fmt::to_string(out);
     }
 
     //output tgt mesh
     {
-      fmt::memory_buffer out;
-      fmt::format_to(out,
-                     "  <g id='target_mesh' stroke='black' stroke-width='.01' "
-                     "fill='blue' fill-opacity='.7'>\n");
+      axom::fmt::memory_buffer out;
+      axom::fmt::format_to(
+        out,
+        "  <g id='target_mesh' stroke='black' stroke-width='.01' "
+        "fill='blue' fill-opacity='.7'>\n");
       auto& meshWrapper = tgtMesh;
       for(int i = 0; i < meshWrapper.numElements(); ++i)
       {
         auto cp = meshWrapper.elemAsCurvedPolygon(i);
-        fmt::format_to(out, cpToSVG(cp));
+        axom::fmt::format_to(out, cpToSVG(cp));
       }
-      fmt::format_to(out, "  </g>\n");
-      tgtGroup = fmt::to_string(out);
+      axom::fmt::format_to(out, "  </g>\n");
+      tgtGroup = axom::fmt::to_string(out);
     }
 
     //output intersection elements
     {
       double EPS = 1e-8;
-      fmt::memory_buffer out;
-      fmt::format_to(
+      axom::fmt::memory_buffer out;
+      axom::fmt::format_to(
         out,
         "  <g id='intersection_mesh' stroke='black' stroke-width='.01' "
         "fill='green' fill-opacity='.7'>\n");
@@ -643,7 +647,7 @@ public:
           {
             for(auto& cp : pnew)
             {
-              fmt::format_to(out, cpToSVG(cp));
+              axom::fmt::format_to(out, cpToSVG(cp));
             }
           }
 
@@ -652,8 +656,8 @@ public:
         }
       }
 
-      fmt::format_to(out, "  </g>\n");
-      intersectionGroup = fmt::to_string(out);
+      axom::fmt::format_to(out, "  </g>\n");
+      intersectionGroup = axom::fmt::to_string(out);
     }
 
     // Write the file
@@ -715,7 +719,7 @@ struct MeshProps
 
   friend std::ostream& operator<<(std::ostream& os, const MeshProps& props)
   {
-    os << fmt::format(
+    os << axom::fmt::format(
       "{{\n"
       "   file: {} \n"
       "   offset({}): {} \n"
@@ -723,9 +727,9 @@ struct MeshProps
       "   scale: {} \n"
       "   refinement: {} \n"
       "}}",
-      props.file.empty() ? "<>" : fmt::format("'{}'", props.file),
+      props.file.empty() ? "<>" : axom::fmt::format("'{}'", props.file),
       props.offset.size(),
-      fmt::join(props.offset, " "),
+      axom::fmt::join(props.offset, " "),
       props.order,
       props.scale,
       props.refinement);
@@ -773,11 +777,11 @@ int main(int argc, char** argv)
 #endif
 
   // Set up and parse command line args
-  CLI::App app {"High order mesh intersection application"};
+  axom::CLI::App app {"High order mesh intersection application"};
   {
     app.add_option("--srcFile", srcMesh.file)
       ->description("mfem mesh file for source mesh")
-      ->check(CLI::ExistingFile);
+      ->check(axom::CLI::ExistingFile);
     app.add_option("--srcOffset", srcMesh.offset)
       ->description("offset for source mesh")
       ->expected(2);
@@ -793,7 +797,7 @@ int main(int argc, char** argv)
 
     app.add_option("--tgtFile", tgtMesh.file)
       ->description("mfem mesh file for source mesh")
-      ->check(CLI::ExistingFile);
+      ->check(axom::CLI::ExistingFile);
     app.add_option("--tgtOffset", tgtMesh.offset)
       ->description("offset for target mesh")
       ->expected(2);
@@ -866,8 +870,9 @@ int main(int argc, char** argv)
   remap.outputAsSVG();
 
   std::cout.precision(16);
-  SLIC_INFO(
-    fmt::format("Intersecting meshes: area: {}, time: {}", area, timer.elapsed()));
+  SLIC_INFO(axom::fmt::format("Intersecting meshes: area: {}, time: {}",
+                              area,
+                              timer.elapsed()));
 
   return 0;
 }
