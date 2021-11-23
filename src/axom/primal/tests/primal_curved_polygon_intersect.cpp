@@ -14,6 +14,7 @@
 
 #include "axom/primal/geometry/CurvedPolygon.hpp"
 #include "axom/primal/operators/intersect.hpp"
+#include "axom/primal/operators/compute_moments.hpp"
 
 #include "axom/fmt.hpp"
 
@@ -702,8 +703,8 @@ TEST(primal_curvedpolygon, doubleIntersection)
         walk.splitPolygonsAlongIntersections(bPolygon1, bPolygon2, EPS * EPS);
 
       EXPECT_EQ(2, numIntersections);
-      EXPECT_NEAR(bPolygon1.area(), walk.psplit[0].area(), EPS);
-      EXPECT_NEAR(bPolygon2.area(), walk.psplit[1].area(), EPS);
+      EXPECT_NEAR(primal::area(bPolygon1), primal::area(walk.psplit[0]), EPS);
+      EXPECT_NEAR(primal::area(bPolygon2), primal::area(walk.psplit[1]), EPS);
 
       SLIC_INFO("Checking for intersections between " << bPolygon1 << " and "
                                                       << bPolygon2);
@@ -715,7 +716,7 @@ TEST(primal_curvedpolygon, doubleIntersection)
       if(!regions.empty())
       {
         EXPECT_EQ(4, regions[0].numEdges());
-        walkIntersectionArea = regions[0].area();
+        walkIntersectionArea = primal::area(regions[0]);
       }
       else
       {
@@ -740,7 +741,7 @@ TEST(primal_curvedpolygon, doubleIntersection)
       if(!regions.empty())
       {
         EXPECT_EQ(4, regions[0].numEdges());
-        directIntersectionArea = regions[0].area();
+        directIntersectionArea = primal::area(regions[0]);
       }
       else
       {

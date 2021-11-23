@@ -446,8 +446,8 @@ public:
 
       auto tgtPoly = tgtMesh.elemAsCurvedPolygon(i);
       //SLIC_INFO("Target Element: \n\t" << tgtPoly);
-      correctArea += tgtPoly.area();
-      //SLIC_INFO("Target elem " << i << " -- area " << tgtPoly.area()
+      correctArea += primal::area(tgtPoly);
+      //SLIC_INFO("Target elem " << i << " -- area " << primal::area(tgtPoly)
       //        << " -- bbox " << tgtMesh.elementBoundingBox(i)
       //);
 
@@ -457,7 +457,7 @@ public:
         auto srcPoly = srcMesh.elemAsCurvedPolygon(srcElem);
         //SLIC_INFO("\tSource Element: " << srcPoly);
         //SLIC_INFO(
-        //  "\tSource elem \n\t\t" << srcElem << "\n\t\t -- area " << srcPoly.area()
+        //  "\tSource elem \n\t\t" << srcElem << "\n\t\t -- area " << primal::area(srcPoly)
         //              << " -- bbox " <<  srcMesh.elementBoundingBox(srcElem)
         //);
 
@@ -468,8 +468,8 @@ public:
         {
           for(int i = 0; i < static_cast<int>(pnew.size()); ++i)
           {
-            A -= pnew[i].area();
-            //   SLIC_INFO("** Intersection area :" << -pnew[i].area()
+            A -= primal::area(pnew[i]);
+            //   SLIC_INFO("** Intersection area :" << -primal::area(pnew[i])
             //            );
           }
         }
@@ -480,7 +480,7 @@ public:
         //            //<< " -- bbox " << srcMesh.elementBoundingBox(srcElem)
         //            );
       }
-      calcE += abs(tgtPoly.area() - A);
+      calcE += abs(primal::area(tgtPoly) - A);
       totalArea += A;
       //  SLIC_INFO("Calculated Area :" << A);
     }

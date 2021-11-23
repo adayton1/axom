@@ -11,8 +11,10 @@
 #include "gtest/gtest.h"
 
 #include "axom/slic.hpp"
+#include "axom/primal/geometry/Point.hpp"
 #include "axom/primal/geometry/CurvedPolygon.hpp"
 #include "axom/primal/operators/intersect.hpp"
+#include "axom/primal/operators/compute_moments.hpp"
 
 #include <numeric>
 
@@ -22,17 +24,19 @@ namespace primal = axom::primal;
  * Helper function to compute the area and centroid of a curved polygon and to check that they match expectations, 
  * stored in \a expArea and \a expCentroid. Areas and Moments are computed within tolerance \a eps and checks use \a test_eps.
  */
-template <typename CoordType, int DIM>
-void checkMoments(const primal::CurvedPolygon<CoordType, DIM>& bPolygon,
+template <typename CoordType>
+void checkMoments(const primal::CurvedPolygon<CoordType, 2>& bPolygon,
                   const CoordType expArea,
-                  const primal::Point<CoordType, DIM>& expMoment,
+                  const primal::Point<CoordType, 2>& expMoment,
                   double eps,
                   double test_eps)
 {
-  EXPECT_NEAR(expArea, bPolygon.area(eps), test_eps);
-  for(int i = 0; i < DIM; ++i)
+  EXPECT_NEAR(expArea, primal::area(bPolygon, eps), test_eps);
+
+  const auto centroid = primal::centroid(bPolygon, eps);
+  for(int i = 0; i < 2; ++i)
   {
-    EXPECT_NEAR(expMoment[i], bPolygon.centroid(eps)[i], test_eps);
+    EXPECT_NEAR(expMoment[i], centroid[i], test_eps);
   }
 }
 
@@ -256,8 +260,8 @@ TEST(primal_curvedpolygon, moments_triangle_degenerate)
 
   CurvedPolygonType bPolygon;
   EXPECT_EQ(0, bPolygon.numEdges());
-  EXPECT_EQ(0.0, bPolygon.area());
-  PointType origin = PointType::make_point(0.0, 0.0);
+  EXPECT_EQ(0.0, primal::area(bPolygon));
+  PointType origin {0.0, 0.0};
 
   PointType controlPoints[2] = {PointType {0.6, 1.2}, PointType {0.3, 2.0}};
 
@@ -466,7 +470,7 @@ TEST(primal_curvedpolygon, area_intersection_triangle_linear)
   CoordType A = 0.0;
   for(int i = 0; i < static_cast<int>(bPolygons3.size()); ++i)
   {
-    A += bPolygons3[i].area(1e-14);
+    A += primal::area(bPolygons3[i], 1e-14);
   }
   CoordType expA = -0.0793347222222222222;
   EXPECT_NEAR(A, expA, 1e-10);
@@ -527,7 +531,7 @@ TEST(primal_curvedpolygon, area_intersection_triangle_quadratic)
   CoordType A = 0.0;
   for(int i = 0; i < static_cast<int>(bPolygons3.size()); ++i)
   {
-    A += bPolygons3[i].area(1e-8);
+    A += primal::area(bPolygons3[i], 1e-8);
   }
   CoordType expA = -0.024649833203616;
   EXPECT_NEAR(A, expA, 1e-10);
