@@ -505,10 +505,10 @@ bool intersect(const OrientedBoundingBox<T, 3>& b1,
  * Thus, component curves do not intersect at \f$ s==1 \f$ or at 
  * \f$ t==1 \f$.
  */
-template <typename T, int NDIMS>
-bool intersect(const CurvedPolygon<T, NDIMS>& p1,
-               const CurvedPolygon<T, NDIMS>& p2,
-               std::vector<CurvedPolygon<T, NDIMS>>& pnew,
+template <typename T>
+bool intersect(const CurvedPolygon<T, 2>& p1,
+               const CurvedPolygon<T, 2>& p2,
+               std::vector<CurvedPolygon<T, 2>>& pnew,
                double tol = 1E-8)
 {
   // for efficiency, linearity check actually uses a squared tolerance
@@ -546,9 +546,9 @@ bool intersect(const CurvedPolygon<T, NDIMS>& p1,
  * contain their first endpoint, but not their last endpoint. Thus, the
  * curves do not intersect at \f$ s==1 \f$ or at \f$ t==1 \f$.
  */
-template <typename T, int NDIMS>
-bool intersect(const BezierCurve<T, NDIMS>& c1,
-               const BezierCurve<T, NDIMS>& c2,
+template <typename T>
+bool intersect(const BezierCurve<T, 2>& c1,
+               const BezierCurve<T, 2>& c2,
                std::vector<T>& sp,
                std::vector<T>& tp,
                double tol = 1E-8)
